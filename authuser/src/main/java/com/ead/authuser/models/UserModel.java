@@ -24,7 +24,7 @@ public class UserModel implements Serializable {
     private UUID userId;
 
     @Column(nullable = false, unique = true, length = 50)
-    private String userName;
+    private String username;
 
     @Column(nullable = false, unique = true, length = 50)
     private String email;
@@ -51,7 +51,7 @@ public class UserModel implements Serializable {
     private String cpf;
 
     @Column
-    private String imgUrl;
+    private String imageUrl;
 
     @Column(nullable = false)
     @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "dd-MM-yyyy HH:mm:ss")
