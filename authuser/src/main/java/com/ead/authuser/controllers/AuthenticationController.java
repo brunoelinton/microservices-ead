@@ -39,17 +39,13 @@ public class AuthenticationController {
 
         var userModel = new UserModel();
 
-        System.out.println("Vamos salvar");
-        System.out.println(userDto);
         BeanUtils.copyProperties(userDto, userModel);
         userModel.setUserStatus(UserStatus.ACTIVE);
         userModel.setUserType(UserType.STUDENT);
         userModel.setCreationDate(LocalDateTime.now(ZoneId.of("UTC")));
         userModel.setLastUpdate(LocalDateTime.now(ZoneId.of("UTC")));
-
         userService.save(userModel);
 
         return  ResponseEntity.status(HttpStatus.CREATED).body(userModel);
     }
-
 }
