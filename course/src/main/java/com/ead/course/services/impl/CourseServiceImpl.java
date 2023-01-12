@@ -30,10 +30,10 @@ public class CourseServiceImpl implements CourseService {
     @Transactional()
     @Override
     public void delete(CourseModel courseModel) {
-        List<ModuleModel> moduleModelList = moduleRepository.findAllModulesInCourse(courseModel.getCourseId());
+        List<ModuleModel> moduleModelList = moduleRepository.findAllModulesIntoCourse(courseModel.getCourseId());
         if(!moduleModelList.isEmpty()) {
             for(ModuleModel module: moduleModelList) {
-                List<LessonModel> lessonModelList = lessonRepository.findAllLessonsInModule(module.getModuleId());
+                List<LessonModel> lessonModelList = lessonRepository.findAllLessonsIntoModule(module.getModuleId());
                 if(!lessonModelList.isEmpty()) {
                     lessonRepository.deleteAll(lessonModelList);
                 }

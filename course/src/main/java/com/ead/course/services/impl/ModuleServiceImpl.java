@@ -7,9 +7,11 @@ import com.ead.course.repositories.ModuleRepository;
 import com.ead.course.services.ModuleService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
-import javax.transaction.Transactional;
 import java.util.List;
+import java.util.Optional;
+import java.util.UUID;
 
 @Service
 public class ModuleServiceImpl implements ModuleService {
@@ -23,10 +25,28 @@ public class ModuleServiceImpl implements ModuleService {
     @Transactional
     @Override
     public void delete(ModuleModel moduleModel) {
-        List<LessonModel> lessonModelList = lessonRepository.findAllLessonsInModule(moduleModel.getModuleId());
+        List<LessonModel> lessonModelList = lessonRepository.findAllLessonsIntoModule(moduleModel.getModuleId());
         if(!lessonModelList.isEmpty()) {
             lessonRepository.deleteAll(lessonModelList);
         }
         moduleRepository.delete(moduleModel);
+    }
+
+    @Transactional
+    @Override
+    public ModuleModel save(ModuleModel moduleModel) {
+        return moduleRepository.save(moduleModel);
+    }
+
+    @Transactional(readOnly = true)
+    @Override
+    public Optional<ModuleModel> findModuleIntoCourse(UUID courseId, UUID moduleId) {
+        return moduleRepository.findModuleIntoCourse(courseId, moduleId);
+    }
+
+    @Transactional(readOnly = true)
+    @Override
+    public List<ModuleModel> findAllByCourse(UUID courseId) {
+        return moduleRepository.findAllModulesIntoCourse(courseId);
     }
 }
